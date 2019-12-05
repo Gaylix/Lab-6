@@ -84,23 +84,16 @@ void main(void)
     
     while(1)
     {
-        deplace(&posX,&posY);
-        
+        deplace(&posX,&posY);       // après 6ième boucle, m_tabMines[0][3] 
+        /*
+        if(m_tabMines[0][3] == 255)
+        {
+            __delay_ms(1);
+        }
+         * */
         if(PORT_SW == false)
         {
-            if(demine(posX,posY) == false)
-            {
-                afficheTabMines();
-                __delay_ms(2000);
-                nbMines = NB_MINES;
-                
-                initTabVue();
-                rempliMines(nbMines);
-                metToucheCombien();
-                afficheTabVue();
-                posX = (NB_COL / 2);        // sers à initialiser la position de départ du curseur au milieu de l'affichage
-                posY = (NB_LIGNE / 2);      // sers à initialiser la position de départ du curseur au milieu de l'affichage
-            }else if(gagne(&nbMines) == true)
+            if((demine(posX,posY) == false) || (gagne(&nbMines) == true))
             {
                 afficheTabMines();
                 __delay_ms(2000);
@@ -114,6 +107,7 @@ void main(void)
             }
         }
         __delay_ms(100);
+   
     }
     
 }
@@ -127,16 +121,16 @@ void main(void)
 void deplace(int* x, int* y)
 {
     
-    char amHereX[1];
-    char amHereY[1];
+    char amHereX;
+    char amHereY;
     int posMemY = *y;
     int posMemX = *x;
     bool change = false;
     
-    amHereX[0] = getAnalog(AXE_X);
-    amHereY[0] = getAnalog(AXE_Y);
+    amHereX = getAnalog(AXE_X);
+    amHereY = getAnalog(AXE_Y);
     
-    if((amHereX[0] < 99) && (amHereX[0] >= 0))
+    if((amHereX < 99) && (amHereX >= 0))
     {
         *x = *x - 1;
         change = true;
@@ -144,7 +138,7 @@ void deplace(int* x, int* y)
         {
             *x = NB_COL;
         }
-    }else if((amHereX[0] > 155) && (amHereX[0] <= 255))
+    }else if((amHereX > 155) && (amHereX <= 255))
     {
         *x = *x + 1;
         change = true;
@@ -158,7 +152,7 @@ void deplace(int* x, int* y)
         change = false;
     }
 
-    if((amHereY[0] < 99) && (amHereY[0] >= 0))
+    if((amHereY < 99) && (amHereY >= 0))
     {
         *y = *y - 1;
         change = true;
@@ -166,7 +160,7 @@ void deplace(int* x, int* y)
         {
             *y = NB_LIGNE;
         }
-    }else if((amHereY[0] > 155) && (amHereY[0] <= 255))
+    }else if((amHereY > 155) && (amHereY <= 255))
     {
         *y = *y + 1;
         change = true;
@@ -220,6 +214,12 @@ bool demine(char x, char y)
     }
 }
 
+/*
+void metDrapeau(char x, char y);
+{
+    
+}
+*/
 
 /*
  * @brief Rempli le tableau m_tabVue avec le caractère spécial (définie en CGRAM
@@ -288,7 +288,7 @@ void rempliMines(int nb)
     }
     
     
-    for(int i = 0; i < NB_MINES; i ++)
+    for(int i = 0; i < nb; i ++)
     {
         do{
             randX = (rand() % NB_COL);
@@ -415,7 +415,7 @@ bool gagne(int *pMines)
     
     if(compte == nombreMines)
     {
-        (*pMines) = (*pMines + 1);
+        *pMines = *pMines + 1;
         return true;
     }else
     {
