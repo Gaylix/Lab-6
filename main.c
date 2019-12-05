@@ -100,11 +100,10 @@ void main(void)
                 afficheTabVue();
                 posX = (NB_COL / 2);        // sers à initialiser la position de départ du curseur au milieu de l'affichage
                 posY = (NB_LIGNE / 2);      // sers à initialiser la position de départ du curseur au milieu de l'affichage
-            }else if(gagne(nbMines) == true)
+            }else if(gagne(&nbMines) == true)
             {
                 afficheTabMines();
                 __delay_ms(2000);
-                nbMines ++;
                 
                 initTabVue();
                 rempliMines(nbMines);
@@ -394,28 +393,29 @@ void enleveTuilesAutour(char x, char y)
  * @param int* pMines. Le nombre de mine.
  * @return vrai si gagné, faux sinon
  */
-bool gagne(int* pMines)
+bool gagne(int *pMines)
 {
     int compte = 0;
-    int nb = 0;
+    int nombreMines = 0;
     
-    nb = *pMines;
+    nombreMines = (*pMines);
     
     for(int i = 0; i < NB_LIGNE; i ++)
     {
         for(int j = 0; j < NB_COL; j ++)
         {
-            if(m_tabVue[i][j] == m_tabMines[i][j])
+            if(m_tabVue[i][j] == 1)
             {
                 compte ++;
             }
         }
     }
     
-    compte = ((NB_LIGNE * NB_COL) - compte);
     
-    if(compte == nb)
+    
+    if(compte == nombreMines)
     {
+        (*pMines) = (*pMines + 1);
         return true;
     }else
     {
