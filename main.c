@@ -349,13 +349,13 @@ char calculToucheCombien(int ligne, int colonne)
     
     for(int i = -1; i <= 1; i ++)
     {
-        if(((ligne + i) != -1) && ((ligne + i) != (NB_LIGNE)))
+        if(((ligne + i) != -1) && ((ligne + i) != (NB_LIGNE)))      // vérifie si la ligne présente est à l'intérieur de la matrice
         {
             for(int j = -1; j <= 1; j ++)
             {
-                if(((colonne + j) != -1) && ((colonne + j) != (NB_COL)))
+                if(((colonne + j) != -1) && ((colonne + j) != (NB_COL)))        // vérifie si la colonne présente est à l'intérieur de la matrice
                 {
-                    if(m_tabMines[ligne + i][colonne + j] == 2)
+                    if(m_tabMines[ligne + i][colonne + j] == 2)     // vérifie si la case sélectionnée est une mine
                     {
                         compte ++;
                     }
@@ -366,10 +366,10 @@ char calculToucheCombien(int ligne, int colonne)
     
     if(compte == 0)
     {
-        return 32;
+        return 32;      // si la case ne touche à aucune mine, renvoie le code ASCII de 0
     }else
     {
-        return (compte + 48);
+        return (compte + 48);       // si la case touche à une ou plusieures mines, renvoie le code ASCII du chiffre correspondant
     }
     
 }
