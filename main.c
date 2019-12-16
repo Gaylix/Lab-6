@@ -89,25 +89,25 @@ void main(void)
         deplace(&posX,&posY);      
         
         
-        if(PORTBbits.RB0 == false)
+        if(PORTBbits.RB0 == false)      // vérifie si le bouton RB0 est enfoncé
         {
             metDrapeau(posX,posY);
         }
         
-        if(PORT_SW == false)
+        if(PORT_SW == false)            // vérifie si le bouton de la manette est enfoncé
         {
-            if((demine(posX,posY) == false) || (gagne(&nbMines) == true))
+            if((demine(posX,posY) == false) || (gagne(&nbMines) == true))       // vérifie si la partie as été gagnée ou perdue
             {
                 afficheTabMines();
                 __delay_ms(500);
-                while(PORT_SW == true)
+                while(PORT_SW == true)      // attend que le bouton soit relâché
                 {
                     
                 }
                 
-                initTabVue();
-                rempliMines(nbMines);
-                metToucheCombien();
+                initTabVue();               // réinitialise la matrice m_tabVue
+                rempliMines(nbMines);       // réinitialise la matrice m_tabMines
+                metToucheCombien();         // réinitialise les cases qui touchent aux mines
                 afficheTabVue();
                 posX = (NB_COL / 2);        // sers à initialiser la position de départ du curseur au milieu de l'affichage
                 posY = (NB_LIGNE / 2);      // sers à initialiser la position de départ du curseur au milieu de l'affichage
