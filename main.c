@@ -24,7 +24,7 @@
 
 /********************** CONSTANTES *******************************************/
 #define _XTAL_FREQ 1000000 //Constante utilisée par __delay_ms(x). Doit = fréq interne du uC
-#define DELAI_TMR0 0x0001 // Vitesse du jeu (temps de déplacement des aliens):  0x0BDC = 2s, 0x85EE = 1s
+//#define DELAI_TMR0 0x0001 // Vitesse du jeu (temps de déplacement des aliens):  0x0BDC = 2s, 0x85EE = 1s
 #define NB_LIGNE 4  //afficheur LCD 4x20
 #define NB_COL 20
 #define AXE_X 7  //canal analogique de l'axe x
@@ -55,7 +55,6 @@ char m_tabMines[NB_LIGNE][NB_COL+1]; //Tableau contenant les mines, les espaces 
 char m_tabVue[NB_LIGNE][NB_COL+1];  //Tableau des caractères affichés au LCD
 
 
-
 /*               ***** PROGRAMME PRINCPAL *****                             */
 void main(void)
 {
@@ -63,6 +62,7 @@ void main(void)
     int posX = 0;           // variable pour se souvenir de la position en X du curseur
     int posY = 0;           // variable pour se souvenir de la position en Y du curseur
     int nbMines = NB_MINES;
+    
     
     /******** début du code********************/
     initialisation();
@@ -79,24 +79,31 @@ void main(void)
     
 
     
+
+    
     posX = (NB_COL / 2);        // sers à initialiser la position de départ du curseur au milieu de l'affichage
     posY = (NB_LIGNE / 2);      // sers à initialiser la position de départ du curseur au milieu de l'affichage
     
     while(1)
     {
-        deplace(&posX,&posY);       // après 6ième boucle, m_tabMines[0][3] 
-        /*
-        if(m_tabMines[0][3] == 255)
+        deplace(&posX,&posY);      
+        
+        
+        if(PORTBbits.RB0 == false)
         {
-            __delay_ms(1);
+            metDrapeau(posX,posY);
         }
-         * */
+        
         if(PORT_SW == false)
         {
             if((demine(posX,posY) == false) || (gagne(&nbMines) == true))
             {
                 afficheTabMines();
-                __delay_ms(2000);
+                __delay_ms(500);
+                while(PORT_SW == true)
+                {
+                    
+                }
                 
                 initTabVue();
                 rempliMines(nbMines);
@@ -106,8 +113,9 @@ void main(void)
                 posY = (NB_LIGNE / 2);      // sers à initialiser la position de départ du curseur au milieu de l'affichage
             }
         }
+         
         __delay_ms(100);
-   
+    
     }
     
 }
@@ -125,15 +133,14 @@ void deplace(int* x, int* y)
     char amHereY;
     int posMemY = *y;
     int posMemX = *x;
-    bool change = false;
     
     amHereX = getAnalog(AXE_X);
     amHereY = getAnalog(AXE_Y);
     
+    
     if((amHereX < 99) && (amHereX >= 0))
     {
         *x = *x - 1;
-        change = true;
         if(*x <= 0)
         {
             *x = NB_COL;
@@ -141,21 +148,15 @@ void deplace(int* x, int* y)
     }else if((amHereX > 155) && (amHereX <= 255))
     {
         *x = *x + 1;
-        change = true;
         if(*x > NB_COL)
         {
             *x = 1;
         }
-    }else
-    {
-        *x = *x;
-        change = false;
     }
-
+    
     if((amHereY < 99) && (amHereY >= 0))
     {
         *y = *y - 1;
-        change = true;
         if(*y <= 0)
         {
             *y = NB_LIGNE;
@@ -163,26 +164,17 @@ void deplace(int* x, int* y)
     }else if((amHereY > 155) && (amHereY <= 255))
     {
         *y = *y + 1;
-        change = true;
         if(*y > NB_LIGNE)
         {
             *y = 1;
         }
-    }else
-    {
-        *y = *y;
-        change = false;
-    }
-
-    
-    if(change == true)
-    {
-        lcd_gotoXY(posMemX,posMemY);
     }
     
-    lcd_gotoXY(*x,*y);
     
-    __delay_ms(1);
+    posMemY = *y;
+    posMemX = *x;
+    lcd_gotoXY(posMemX,posMemY);
+    
     
 }
  
@@ -214,12 +206,20 @@ bool demine(char x, char y)
     }
 }
 
-/*
-void metDrapeau(char x, char y);
+
+void metDrapeau(char x, char y)
 {
-    
+    if(m_tabVue[y-1][x-1] == 1)
+    {
+        m_tabVue[y-1][x-1] = 3;
+        afficheTabVue();
+    }else if(m_tabVue[y-1][x-1] == 3)
+    {
+        m_tabVue[y-1][x-1] = 1;
+        afficheTabVue();
+    }
 }
-*/
+
 
 /*
  * @brief Rempli le tableau m_tabVue avec le caractère spécial (définie en CGRAM
@@ -244,25 +244,35 @@ void initTabVue(void)
 
 void afficheTabVue(void)
 {
+    
     for(int i = 0; i < NB_LIGNE; i ++)
     {
+        lcd_gotoXY(1,i+1);
+        lcd_putMessage(m_tabVue[i]);
+        /*
         for(int j = 0; j < NB_COL; j ++)
         {
             lcd_gotoXY(j+1,i+1);
             lcd_ecritChar(m_tabVue[i][j]);
         }
+        */
     }
 }
 
 void afficheTabMines(void)
 {
+    
     for(int i = 0; i < NB_LIGNE; i ++)
     {
+        lcd_gotoXY(1,i+1);
+        lcd_putMessage(m_tabMines[i]);
+        /*
         for(int j = 0; j < NB_COL; j ++)
         {
             lcd_gotoXY(j+1,i+1);
             lcd_ecritChar(m_tabMines[i][j]);
         }
+        */
     }
 }
  
@@ -299,6 +309,7 @@ void rempliMines(int nb)
         m_tabMines[randY][randX] = 2;
     }
     
+    
 }
  
 /*
@@ -323,6 +334,7 @@ void metToucheCombien(void)
             }
         }
     }
+    //rappelZT = m_tabMines[0][3];
 }
  
 /*
@@ -404,7 +416,7 @@ bool gagne(int *pMines)
     {
         for(int j = 0; j < NB_COL; j ++)
         {
-            if(m_tabVue[i][j] == 1)
+            if((m_tabVue[i][j] == 1) || (m_tabVue[i][j] == 3))
             {
                 compte ++;
             }
@@ -468,8 +480,9 @@ void initialisation(void)
     ADCON2bits.ACQT = 0;//7; //20 TAD (on laisse le max de temps au Chold du convertisseur AN pour se charger)
     ADCON2bits.ADCS = 0;//6; //Fosc/64 (Fréquence pour la conversion la plus longue possible)
  
- 
+    
     /**************Timer 0*****************/
+    /*
     T0CONbits.TMR0ON    = 1;
     T0CONbits.T08BIT    = 0; // mode 16 bits
     T0CONbits.T0CS      = 0;
@@ -480,5 +493,6 @@ void initialisation(void)
     INTCONbits.TMR0IF   = 0; // timer 0 interrupt flag
     INTCONbits.PEIE = 1; //permet interruption des périphériques
     INTCONbits.GIE = 1;  //interruptions globales permises
+    */
 }
 
