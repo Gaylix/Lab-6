@@ -227,9 +227,7 @@ void metDrapeau(char x, char y)
 
 
 /*
- * @brief Rempli le tableau m_tabVue avec le caractère spécial (définie en CGRAM
- *  du LCD) TUILE. Met un '\0' à la fin de chaque ligne pour faciliter affichage
- *  avec lcd_putMessage().
+ * @brief initialise la matrice m_tabVue avec une tuile dans chaque case
  * @param rien
  * @return rien
  */
