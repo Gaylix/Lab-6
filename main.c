@@ -1,8 +1,20 @@
  /**
  * @file   main.c, projet Lab4
  * @author Nicolas Gosselin
- * @date   Septembre 2019
- * @brief    
+ * @date   Décembre 2019
+ * @brief  code pour recréer le jeu démineur. Place un certain nombre de mines
+  *        qui est augmenté de 1 après chaque victoire. vérifie ensuite chaque 
+  *        case et met un chiffre correspondant au nombre de mines qui sont 
+  *        autour (met une case vide si ce nombre est 0). L'affichage est 
+  *        ensuite rempli de tuiles. On peux se déplacer avec une manette et 
+  *        déminer avec la même manette. Il est aussi possible de placer un 
+  *        drapeau aux endroits où nous pensons qu'il y as une mine. Lorsqu'une
+  *        tuile est déminée, si elle ne contient pas un chiffre ni une mine, 
+  *        les cases autours sont alors déminées. Si la case déminée est un 
+  *        chiffre, seulement la case séléctionnée sera dévoilée. Si la case 
+  *        séléctionnée est une mine, toutes les mines et chiffres seront 
+  *        dévoilés et la partie est alors perdue. La partie est gagnée lorsque 
+  *        toutes les cases sauf les mines sont dévoilées.
  * Environnement:
  *     Développement: MPLAB X IDE (version 5.05)
  *     Compilateur: XC8 (version 2.00)
