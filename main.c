@@ -259,20 +259,18 @@ void afficheTabVue(void)
     }
 }
 
+/*
+ * @brief affiche la matrice m_tabMines
+ * @param rien
+ * @return rien
+ */
 void afficheTabMines(void)
 {
     
     for(int i = 0; i < NB_LIGNE; i ++)
     {
-        lcd_gotoXY(1,i+1);
-        lcd_putMessage(m_tabMines[i]);
-        /*
-        for(int j = 0; j < NB_COL; j ++)
-        {
-            lcd_gotoXY(j+1,i+1);
-            lcd_ecritChar(m_tabMines[i][j]);
-        }
-        */
+        lcd_gotoXY(1,i+1);                  // vas à la ligne séléctionnée sur l'affichage 
+        lcd_putMessage(m_tabMines[i]);      // affiche toute la ligne séléctionnée
     }
 }
  
