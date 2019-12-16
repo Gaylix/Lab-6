@@ -206,17 +206,22 @@ bool demine(char x, char y)
     }
 }
 
-
+/*
+ * @brief met un drapeau sur la tuile séléctionnée ou enlève un drapeau si il y
+ * en as déja un
+ * @param rien
+ * @return rien
+ */
 void metDrapeau(char x, char y)
 {
-    if(m_tabVue[y-1][x-1] == 1)
+    if(m_tabVue[y-1][x-1] == 1)     // vérifie si la case séléctionnée est une tuile
     {
-        m_tabVue[y-1][x-1] = 3;
-        afficheTabVue();
-    }else if(m_tabVue[y-1][x-1] == 3)
+        m_tabVue[y-1][x-1] = 3;     // si c'est le cas, elle est remplacée par un drapeau
+        afficheTabVue();            // affiche immédiatement la nouvelle matrice m_tabVue
+    }else if(m_tabVue[y-1][x-1] == 3)   // si la case n'est pas une tuile, on vérifie si c'est un drapeau
     {
-        m_tabVue[y-1][x-1] = 1;
-        afficheTabVue();
+        m_tabVue[y-1][x-1] = 1;         // si c'est le cas, il est remplacé par une tuile
+        afficheTabVue();                // affiche immédiatement la nouvelle matrice m_tabVue
     }
 }
 
