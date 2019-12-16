@@ -416,7 +416,7 @@ bool gagne(int *pMines)
     {
         for(int j = 0; j < NB_COL; j ++)
         {
-            if((m_tabVue[i][j] == 1) || (m_tabVue[i][j] == 3))
+            if((m_tabVue[i][j] == 1) || (m_tabVue[i][j] == 3))      // compte le nombre de tuiles et de drapeaux sur l'affichage
             {
                 compte ++;
             }
@@ -425,13 +425,13 @@ bool gagne(int *pMines)
     
     
     
-    if(compte == nombreMines)
+    if(compte == nombreMines)       // vérifie si le nombre de tuiles et de drapeaux est égal au nombre de mines 
     {
-        *pMines = *pMines + 1;
-        return true;
+        *pMines = *pMines + 1;      // augmente le nombre de mines pour la prochaine partie
+        return true;                // pour dire que la partie est gagnée
     }else
     {
-        return false;
+        return false;               // pour dire que la partie n'est pas encore gagnée
     }
 }
 
