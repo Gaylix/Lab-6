@@ -189,20 +189,20 @@ void deplace(int* x, int* y)
  */
 bool demine(char x, char y)
 {
-    if(m_tabMines[y-1][x-1] == ' ')
+    if(m_tabMines[y-1][x-1] == ' ')     // vérifie si la case séléctionnée est une case vide
     {
-        m_tabVue[y-1][x-1] = m_tabMines[y-1][x-1];
-        enleveTuilesAutour(x,y);
-        afficheTabVue();
-        return true;
-    }else if(m_tabMines[y-1][x-1] != 2)
+        m_tabVue[y-1][x-1] = m_tabMines[y-1][x-1];      // dévoile la case séléctionnée
+        enleveTuilesAutour(x,y);                        // dévoile toutes les cases autour
+        afficheTabVue();                                // affiche la nouvelle matrice m_tabVue
+        return true;                                    // retourne vrai pour indiquer que la case séléctionnée n'est pas une mine
+    }else if(m_tabMines[y-1][x-1] != 2)     // vérifie si la case est un nombre
     {
-        m_tabVue[y-1][x-1] = m_tabMines[y-1][x-1];
-        afficheTabVue();
-        return true;
-    }else if(m_tabMines[y-1][x-1] == 2)
+        m_tabVue[y-1][x-1] = m_tabMines[y-1][x-1];      // dévoile la case séléctionnée
+        afficheTabVue();                                // affiche la nouvelle matrice m_tabVue
+        return true;                                    // retourne vrai pour indiquer que la case séléctionnée n'est pas une mine
+    }else if(m_tabMines[y-1][x-1] == 2)     // vérifie si la case séléctionnée est une mine
     {
-        return false;
+        return false;       // retourne faux pour indiquer qu'une mine as été dévoilée
     }
 }
 
