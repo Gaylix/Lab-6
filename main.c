@@ -129,42 +129,42 @@ void main(void)
 void deplace(int* x, int* y)
 {
     
-    char amHereX;
-    char amHereY;
+    char amHereX;       // variable pour se souvenir de la position en x de la manette
+    char amHereY;       // variable pour se souvenir de la position en y de la manette
     int posMemY = *y;
     int posMemX = *x;
     
-    amHereX = getAnalog(AXE_X);
-    amHereY = getAnalog(AXE_Y);
+    amHereX = getAnalog(AXE_X);     // prise de la position en x de la manette 
+    amHereY = getAnalog(AXE_Y);     // prise de la position en y de la manette
     
     
-    if((amHereX < 99) && (amHereX >= 0))
+    if((amHereX < 99) && (amHereX >= 0))        // vérifie si la manette est vers la gauche
     {
-        *x = *x - 1;
-        if(*x <= 0)
+        *x = *x - 1;        // déplace le curseur d'une case vers la gauche
+        if(*x <= 0)         // si le curseur sors de l'affichage, on le fait réapparaitre de l'autre côté
         {
             *x = NB_COL;
         }
-    }else if((amHereX > 155) && (amHereX <= 255))
+    }else if((amHereX > 155) && (amHereX <= 255))       // vérifie si la manette est vers la droite
     {
-        *x = *x + 1;
-        if(*x > NB_COL)
+        *x = *x + 1;        // déplace le curseur d'une case vers la droite
+        if(*x > NB_COL)     // si le curseur sors de l'affichage, on le fait réapparaitre de l'autre côté
         {
             *x = 1;
         }
     }
     
-    if((amHereY < 99) && (amHereY >= 0))
+    if((amHereY < 99) && (amHereY >= 0))        // vérifie si la manette est vers le bas
     {
-        *y = *y - 1;
-        if(*y <= 0)
+        *y = *y - 1;        // déplace le curseur d'une case vers le bas
+        if(*y <= 0)     // si le curseur sors de l'affichage, on le fait réapparaitre de l'autre côté
         {
             *y = NB_LIGNE;
         }
-    }else if((amHereY > 155) && (amHereY <= 255))
+    }else if((amHereY > 155) && (amHereY <= 255))       // vérifie si la manette est vers le haut
     {
-        *y = *y + 1;
-        if(*y > NB_LIGNE)
+        *y = *y + 1;            // déplace le curseur d'une case vers le haut
+        if(*y > NB_LIGNE)       // si le curseur sors de l'affichage, on le fait réapparaitre de l'autre côté
         {
             *y = 1;
         }
@@ -173,7 +173,7 @@ void deplace(int* x, int* y)
     
     posMemY = *y;
     posMemX = *x;
-    lcd_gotoXY(posMemX,posMemY);
+    lcd_gotoXY(posMemX,posMemY);        // déplace le curseur dans la direction désirée
     
     
 }
