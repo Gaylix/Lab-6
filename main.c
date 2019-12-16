@@ -385,16 +385,10 @@ void enleveTuilesAutour(char x, char y)
 {
     for(int i = -1; i <= 1; i ++)
     {
-        //if(((y + i) != -1)) //&& ((y + i) != (NB_LIGNE)))
-        //{
-            for(int j = -1; j <= 1; j ++)
-            {
-                //if(((x + j) != -1)) //&& ((x + j) != (NB_COL)))
-                //{
-                        m_tabVue[y+i-1][x+j-1] = m_tabMines[y+i-1][x+j-1];;
-                //}
-            }
-        //}
+        for(int j = -1; j <= 1; j ++)
+        {
+            m_tabVue[y+i-1][x+j-1] = m_tabMines[y+i-1][x+j-1];      // dévoile la case sous la tuile sélectionnée
+        }
     }
 }
  
