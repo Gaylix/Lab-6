@@ -293,20 +293,20 @@ void rempliMines(int nb)
     {
         for(int j = 0; j < NB_COL; j ++)
         {
-            m_tabMines[i][j] = ' ';
+            m_tabMines[i][j] = ' ';         // vide toutes les cases de la matrice m_tabMines
         }
     }
     
     
-    for(int i = 0; i < nb; i ++)
+    for(int i = 0; i < nb; i ++)        // effectue la boucle suivante pour chaque mine
     {
         do{
             randX = (rand() % NB_COL);
             randY = (rand() % NB_LIGNE);
             
-        }while(m_tabMines[randY][randX] != ' ');
+        }while(m_tabMines[randY][randX] != ' ');        // cherche des cases aléatoirement jusqu'à trouver une case où il n'y as pas déja une mine
         
-        m_tabMines[randY][randX] = 2;
+        m_tabMines[randY][randX] = 2;       // met une mine dans la case
     }
     
     
