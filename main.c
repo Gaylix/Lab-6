@@ -235,7 +235,7 @@ void initTabVue(void)
     {
         for(int j = 0; j < NB_COL; j ++)
         {
-            m_tabVue[i][j] = 1;
+            m_tabVue[i][j] = 1;     // met la valeur d'une tuile dans la case séléctionnée
         }
     }
     
