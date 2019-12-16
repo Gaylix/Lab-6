@@ -330,11 +330,10 @@ void metToucheCombien(void)
         {
             if(m_tabMines[i][j] != 2)
             {
-                m_tabMines[i][j] = calculToucheCombien(i,j);
+                m_tabMines[i][j] = calculToucheCombien(i,j);        // appele la fonction calculToucheCombien si la case séléctionnée n'est pas une mine
             }
         }
     }
-    //rappelZT = m_tabMines[0][3];
 }
  
 /*
